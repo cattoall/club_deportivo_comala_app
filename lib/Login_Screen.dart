@@ -34,7 +34,8 @@ class _State extends State<LoginPage> {
       //print(json.decode(response.body));
       //List responseJson = json.decode(response.body);
       //return responseJson.map((e) => new LoginResponse.fromJson(e)).toList();
-      return response.body;
+      //return response.body;
+      throw Exception('Failed to create album.');
     } else {
       throw Exception('Failed to create album.');
     }
