@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:club_deportivo_comala_app/Forgot_Screen.dart';
 import 'package:club_deportivo_comala_app/LoginResponse.dart';
 import 'package:club_deportivo_comala_app/Register_Screen.dart';
+import 'package:club_deportivo_comala_app/mainMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,11 +19,26 @@ class _State extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
   bool visible = false;
 
-  Future<List<LoginResponse>> userLogin(
+  void _handleSubmitted(String _nit, String _user, String _pass) async {
+    LoginResponse respuesta = await userLogin(_nit, _user, _pass);
+    if (respuesta.resultado == "false") {
+      _showAlert(context, respuesta.error.toString(), "Error al Iniciar Sesión",
+          "Intentar de nuevo");
+    } else {
+      _showAlert(context, respuesta.descrip.toString(),
+          'Bienvenido ${respuesta.nombre.toString()}', "Continuar");
+    }
+  }
+
+  Future<LoginResponse> userLogin(
       String _nit, String _user, String _pass) async {
     var _baseUrl = Uri.parse("https://www.cgtecsa.com/EqRest/EqAppAut.php");
-    var _data = {'Nit': '$_nit', 'Usuario': '$_user', 'Clave': '$_pass'};
-    print(jsonEncode(_data));
+    String _base64PassEncoded = base64.encode(utf8.encode(_pass));
+    var _data = {
+      'Nit': '$_nit',
+      'Usuario': '$_user',
+      'Clave': '$_base64PassEncoded'
+    };
 
     final http.Response response = await http.post(_baseUrl,
         headers: <String, String>{
@@ -30,15 +46,55 @@ class _State extends State<LoginPage> {
         },
         body: jsonEncode(_data));
 
+    LoginResponse outResponse = new LoginResponse();
+
     if (response.statusCode == 200) {
-      //print(json.decode(response.body));
-      //List responseJson = json.decode(response.body);
-      //return responseJson.map((e) => new LoginResponse.fromJson(e)).toList();
-      //return response.body;
-      throw Exception('Failed to create album.');
+      Map<String, dynamic> map = json.decode(response.body);
+      outResponse.resultado = map["resultado"];
+      outResponse.error = map["error"];
+      outResponse.descrip = map["descrip"];
+      outResponse.nombre = map["Nombre"];
     } else {
-      throw Exception('Faileds to create album.');
+      outResponse.resultado = 'false';
+      outResponse.error = 'Error #: ${response.statusCode}';
+      outResponse.descrip = 'Error al intentar consumir el REST API';
+      outResponse.nombre = '';
     }
+    return outResponse;
+  }
+
+  void _showAlert(
+      BuildContext context, String _error, String _title, String _boton) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(_title),
+            content: Text(_error),
+            actions: [
+              FlatButton(
+                  onPressed: () {
+                    if (_boton != 'Continuar') {
+                      Navigator.of(context).pop();
+                    } else {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => MainMenu(),
+                          ),
+                          (route) => false);
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (BuildContext context) => MainMenu(),
+                      //   ),
+                      // );
+                    }
+                  },
+                  child: Text(_boton))
+            ],
+          );
+        });
   }
 
   @override
@@ -111,7 +167,8 @@ class _State extends State<LoginPage> {
                       color: Colors.blue,
                       child: Text('Entrar'),
                       onPressed: () {
-                        userLogin('800000001026', 'ADMIN', 'Prueba');
+                        _handleSubmitted('800000001026', 'ADMIN',
+                            'Clave01*                 ');
                       },
                     )),
                 Container(
