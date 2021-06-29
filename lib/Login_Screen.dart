@@ -31,7 +31,7 @@ class _State extends State<LoginPage> {
         body: jsonEncode(_data));
 
     if (response.statusCode == 200) {
-      print(json.decode(response.body));
+      //print(json.decode(response.body));
       //List responseJson = json.decode(response.body);
       //return responseJson.map((e) => new LoginResponse.fromJson(e)).toList();
       return response.body;
