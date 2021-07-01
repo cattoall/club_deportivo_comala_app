@@ -167,8 +167,8 @@ class _State extends State<LoginPage> {
                       color: Colors.blue,
                       child: Text('Entrar'),
                       onPressed: () {
-                        _handleSubmitted('800000001026', 'ADMIN',
-                            'Clave01*                 ');
+                        _handleSubmitted(nitController.text,
+                            userController.text, passwordController.text);
                       },
                     )),
                 Container(
