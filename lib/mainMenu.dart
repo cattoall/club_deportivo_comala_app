@@ -1,3 +1,4 @@
+import 'package:club_deportivo_comala_app/InventoryPage.dart';
 import 'package:flutter/material.dart';
 
 class MainMenu extends StatefulWidget {
@@ -10,6 +11,7 @@ class _State extends State<MainMenu> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
+    InventoryPage(),
     Text(
       'Index 0: Consulta de Inventario',
       style: optionStyle,
