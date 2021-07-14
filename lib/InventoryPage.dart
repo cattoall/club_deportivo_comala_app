@@ -23,7 +23,7 @@ class _State extends State<InventoryPage> {
     respuesta = await getInventory();
     if (respuesta.resultado == "false") {
       _showAlert(context, respuesta.error.toString(),
-          "Error al Obtener el  Inventario", "Intentar");
+          "Error al Obtener el Inventario", "Intentar");
     } else {}
   }
 
