@@ -61,7 +61,7 @@ class _State extends State<ForgotScreen> {
             title: Text(_title),
             content: Text(_error),
             actions: [
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -116,9 +116,7 @@ class _State extends State<ForgotScreen> {
                 Container(
                     height: 50,
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.blue,
+                    child: ElevatedButton(
                       child: Text('Restablecer Contraseña'),
                       onPressed: () {
                         print(nitController.text);

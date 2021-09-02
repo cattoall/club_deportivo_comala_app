@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:club_deportivo_comala_app/Forgot_Screen.dart';
 import 'package:club_deportivo_comala_app/LoginResponse.dart';
@@ -72,7 +71,7 @@ class _State extends State<LoginPage> {
             title: Text(_title),
             content: Text(_error),
             actions: [
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     if (_boton != 'Continuar') {
                       Navigator.of(context).pop();
@@ -149,22 +148,19 @@ class _State extends State<LoginPage> {
                     ),
                   ),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => ForgotScreen()),
                     );
                   },
-                  textColor: Colors.blue,
                   child: Text('Olvidé Contraseña'),
                 ),
                 Container(
                     height: 50,
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.blue,
+                    child: ElevatedButton(
                       child: Text('Entrar'),
                       onPressed: () {
                         _handleSubmitted(nitController.text,
@@ -175,8 +171,7 @@ class _State extends State<LoginPage> {
                     child: Row(
                   children: <Widget>[
                     Text('¿No tienes cuenta?'),
-                    FlatButton(
-                      textColor: Colors.blue,
+                    TextButton(
                       child: Text(
                         'Registro',
                         style: TextStyle(fontSize: 20),

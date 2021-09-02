@@ -1,4 +1,3 @@
-import 'package:club_deportivo_comala_app/Forgot_Screen.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -91,9 +90,7 @@ class _State extends State<RegisterPage> {
                 Container(
                     height: 50,
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.blue,
+                    child: ElevatedButton(
                       child: Text('Enviar'),
                       onPressed: () {
                         print(nitController.text);

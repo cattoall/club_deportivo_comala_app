@@ -1,8 +1,6 @@
 import 'package:club_deportivo_comala_app/mainMenu.dart';
 import 'package:flutter/material.dart';
 
-import 'Login_Screen.dart';
-
 void main() {
   runApp(MyApp());
 }

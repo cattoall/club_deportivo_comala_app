@@ -69,7 +69,7 @@ class _State extends State<InventoryPage> {
             title: Text(_title),
             content: Text(_error),
             actions: [
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -88,14 +88,12 @@ class _State extends State<InventoryPage> {
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: _onBottonTapped,
                     child: Text(
                       'Generar Listado',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
-                    elevation: 10,
-                    color: Colors.blueAccent,
                   ),
                 ),
               )
