@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:club_deportivo_comala_app/InventoryResponse.dart';
@@ -15,22 +16,22 @@ class _State extends State<InventoryPage> {
   InventoryResponse respuesta = new InventoryResponse();
   List<Datum> lines = [];
 
-  void _onBottonTapped() {
-    _handleSubmitted();
+  void _onBottonTapped(String onValue) {
+    _handleSubmitted(onValue);
   }
 
-  void _handleSubmitted() async {
-    respuesta = await getInventory();
+  void _handleSubmitted(String onValue) async {
+    respuesta = await getInventory(onValue);
     if (respuesta.resultado == "false") {
       _showAlert(context, respuesta.error.toString(),
           "Error al Obtener el Inventario", "Intentar");
     } else {}
   }
 
-  Future<InventoryResponse> getInventory() async {
+  Future<InventoryResponse> getInventory(String onValue) async {
     lines.clear();
     var queryData =
-        'SELECT a.id_codigo AS CODIGO, a.producto as PRODUCTO,ifnull(SUM(b.entrada-b.salida),0) AS EXISTENCIA,  a.precio1 as PRECIO1, a.precio2 AS PRECIO2, a.precio3 AS PRECIO3, a.precio4 AS PRECIO4 FROM inventario a INNER JOIN kardexinven b ON(a.id_codigo= b.id_codigo) GROUP BY a.id_codigo';
+        'SELECT a.id_codigo AS CODIGO, a.producto as PRODUCTO,ifnull(SUM(b.entrada-b.salida),0) AS EXISTENCIA,  a.precio1 as PRECIO1, a.precio2 AS PRECIO2, a.precio3 AS PRECIO3, a.precio4 AS PRECIO4 FROM inventario a INNER JOIN kardexinven b ON(a.id_codigo= b.id_codigo) WHERE a.producto like "%$onValue%" GROUP BY a.id_codigo';
     var _baseUrl = Uri.parse("https://www.cgtecsa.com/EqRest/EqAppQuery.php");
     var _data = {'Nit': '800000001026', 'Query': '$queryData'};
 
@@ -79,6 +80,30 @@ class _State extends State<InventoryPage> {
         });
   }
 
+  Future<String> createAlert(BuildContext context) async {
+    TextEditingController txtText = TextEditingController();
+
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Ingresa Código o Producto'),
+            content: TextField(
+              controller: txtText,
+            ),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.of(context).pop(txtText.text.toString());
+                },
+                elevation: 5.0,
+                child: Text('Buscar...'),
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -86,16 +111,16 @@ class _State extends State<InventoryPage> {
         (lines.length == 0)
             ? Expanded(
                 child: Container(
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                    onPressed: _onBottonTapped,
-                    child: Text(
-                      'Generar Listado',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    // width: double.infinity,
+                    // alignment: Alignment.center,
+                    // child: ElevatedButton(
+                    //   onPressed: _onBottonTapped,
+                    //   child: Text(
+                    //     'Generar Listado',
+                    //     style: TextStyle(fontSize: 18, color: Colors.white),
+                    //   ),
+                    // ),
                     ),
-                  ),
-                ),
               )
             : Expanded(
                 child: ListView.builder(
@@ -192,7 +217,20 @@ class _State extends State<InventoryPage> {
                     );
                   },
                 ),
-              )
+              ),
+        Container(
+          margin: EdgeInsets.all(10),
+          alignment: Alignment.centerRight,
+          child: FloatingActionButton(
+              onPressed: () {
+                createAlert(context).then((value) {
+                  print(value);
+                  _onBottonTapped(value);
+                });
+              },
+              child: Icon(Icons.search),
+              backgroundColor: Colors.green),
+        )
       ],
     );
   }
