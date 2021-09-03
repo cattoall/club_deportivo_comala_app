@@ -15,6 +15,7 @@ class InventoryPage extends StatefulWidget {
 class _State extends State<InventoryPage> {
   InventoryResponse respuesta = new InventoryResponse();
   List<Datum> lines = [];
+  bool isLoading = false;
 
   void _onBottonTapped(String onValue) {
     _handleSubmitted(onValue);
@@ -31,10 +32,12 @@ class _State extends State<InventoryPage> {
   Future<InventoryResponse> getInventory(String onValue) async {
     lines.clear();
     var queryData =
-        'SELECT a.id_codigo AS CODIGO, a.producto as PRODUCTO,ifnull(SUM(b.entrada-b.salida),0) AS EXISTENCIA,  a.precio1 as PRECIO1, a.precio2 AS PRECIO2, a.precio3 AS PRECIO3, a.precio4 AS PRECIO4 FROM inventario a INNER JOIN kardexinven b ON(a.id_codigo= b.id_codigo) WHERE a.producto like "%$onValue%" GROUP BY a.id_codigo';
+        'SELECT a.id_codigo AS CODIGO, a.codigoe AS CODIGOE, a.producto as PRODUCTO,ifnull(SUM(b.entrada-b.salida),0) AS EXISTENCIA,  a.precio1 as PRECIO1, a.precio2 AS PRECIO2, a.precio3 AS PRECIO3, a.precio4 AS PRECIO4 FROM inventario a INNER JOIN kardexinven b ON(a.id_codigo= b.id_codigo) WHERE a.producto like "%$onValue%" GROUP BY a.id_codigo';
     var _baseUrl = Uri.parse("https://www.cgtecsa.com/EqRest/EqAppQuery.php");
     var _data = {'Nit': '800000001026', 'Query': '$queryData'};
 
+    isLoading = true;
+    print(jsonEncode(_data));
     final http.Response response = await http.post(_baseUrl,
         headers: <String, String>{
           'Content-Type': 'application/json',
@@ -49,7 +52,9 @@ class _State extends State<InventoryPage> {
       outResponse.error = map["error"];
       outResponse.query = map["Query"];
       //outResponse.data = map["Data"];
+
       map["Data"].forEach((e) {
+        print(e);
         lines.add(Datum.fromJson(e));
       });
     } else {
@@ -57,6 +62,9 @@ class _State extends State<InventoryPage> {
       outResponse.query = _data.toString();
       outResponse.error = 'Error al recuperar el Inventario';
     }
+    print('Lineas: ${lines.length.toString()}');
+
+    isLoading = false;
     setState(() {});
     return outResponse;
   }
@@ -108,6 +116,14 @@ class _State extends State<InventoryPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Container(
+          child: (isLoading == true)
+              ? CircularProgressIndicator(
+                  value: 50,
+                  semanticsLabel: 'Cargando...',
+                )
+              : Text(''),
+        ),
         (lines.length == 0)
             ? Expanded(
                 child: Container(
@@ -135,10 +151,14 @@ class _State extends State<InventoryPage> {
                       margin: EdgeInsets.all(20),
                       child: Center(
                         child: ListTile(
+                          onTap: () {
+                            print(lines[index].codigo.toString());
+                          },
                           title: Container(
                             child: Text(
-                                '(${lines[index].codigo.toString()}) - ${lines[index].producto.toString()}',
-                                style: TextStyle(fontSize: 12)),
+                              '(${lines[index].codigo.toString()} - ${lines[index].codigoe.toString()}) - ${lines[index].producto.toString()}',
+                              style: TextStyle(fontSize: 12),
+                            ),
                           ),
                           subtitle: Card(
                               elevation: 1,
@@ -224,7 +244,6 @@ class _State extends State<InventoryPage> {
           child: FloatingActionButton(
               onPressed: () {
                 createAlert(context).then((value) {
-                  print(value);
                   _onBottonTapped(value);
                 });
               },

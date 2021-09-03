@@ -13,10 +13,6 @@ class _State extends State<MainMenu> {
   static const List<Widget> _widgetOptions = <Widget>[
     InventoryPage(),
     Text(
-      'Index 0: Consulta de Inventario',
-      style: optionStyle,
-    ),
-    Text(
       'Index 1: Consulta de Inventario Consolidado',
       style: optionStyle,
     ),

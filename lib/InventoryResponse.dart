@@ -37,6 +37,7 @@ class InventoryResponse {
 class Datum {
   Datum({
     this.codigo,
+    this.codigoe,
     this.producto,
     this.existencia,
     this.precio1,
@@ -46,6 +47,7 @@ class Datum {
   });
 
   String? codigo;
+  String? codigoe;
   String? producto;
   String? existencia;
   String? precio1;
@@ -55,6 +57,7 @@ class Datum {
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         codigo: json["CODIGO"],
+        codigoe: json["CODIGOE"],
         producto: json["PRODUCTO"],
         existencia: json["EXISTENCIA"],
         precio1: json["PRECIO1"],
@@ -65,6 +68,7 @@ class Datum {
 
   Map<String, dynamic> toJson() => {
         "CODIGO": codigo,
+        "CODIGOE": codigoe,
         "PRODUCTO": producto,
         "EXISTENCIA": existencia,
         "PRECIO1": precio1,
