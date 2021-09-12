@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:club_deportivo_comala_app/InventoryResponse.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:club_deportivo_comala_app/models/Inventory_model.dart';
 
 class InventoryPage extends StatefulWidget {
   const InventoryPage({Key? key}) : super(key: key);
@@ -143,6 +143,10 @@ class _State extends State<InventoryPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Text(
+          'Consulta de Inventario',
+          style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+        ),
         Container(
           child: (isLoading == true)
               ? CircularProgressIndicator(

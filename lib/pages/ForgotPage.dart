@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'package:club_deportivo_comala_app/ForgotResponse.dart';
+import 'package:club_deportivo_comala_app/models/Forgot_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class ForgotScreen extends StatefulWidget {
+class ForgotPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _State();
 }
 
-class _State extends State<ForgotScreen> {
+class _State extends State<ForgotPage> {
   TextEditingController nitController = TextEditingController();
   TextEditingController userController = TextEditingController();
 

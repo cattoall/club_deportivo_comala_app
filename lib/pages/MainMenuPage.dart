@@ -1,5 +1,10 @@
-import 'package:club_deportivo_comala_app/InventoryPage.dart';
+import 'package:club_deportivo_comala_app/pages/CheckOutPage.dart';
+import 'package:club_deportivo_comala_app/pages/CustomerPage.dart';
+import 'package:club_deportivo_comala_app/pages/InvoicePage.dart';
+import 'package:club_deportivo_comala_app/pages/ProfilePage.dart';
 import 'package:flutter/material.dart';
+
+import 'package:club_deportivo_comala_app/pages/InventoryPage.dart';
 
 class MainMenu extends StatefulWidget {
   @override
@@ -12,26 +17,10 @@ class _State extends State<MainMenu> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     InventoryPage(),
-    Text(
-      'Index 1: Consulta de Inventario Consolidado',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Ingreso de Factura',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Consulta de Clientes',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 4: Corte de Caja',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 5: Usuario',
-      style: optionStyle,
-    ),
+    InvoicePage(),
+    CustomerPage(),
+    CheckOutPage(),
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -54,11 +43,6 @@ class _State extends State<MainMenu> {
           BottomNavigationBarItem(
             icon: Icon(Icons.inventory_2_outlined),
             label: 'Inventario',
-            backgroundColor: Colors.blueGrey,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.inventory_outlined),
-            label: 'Consolidado',
             backgroundColor: Colors.blueGrey,
           ),
           BottomNavigationBarItem(

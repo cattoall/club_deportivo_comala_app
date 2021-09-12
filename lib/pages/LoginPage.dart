@@ -1,11 +1,9 @@
 import 'dart:convert';
-
-import 'package:club_deportivo_comala_app/Forgot_Screen.dart';
-import 'package:club_deportivo_comala_app/LoginResponse.dart';
-import 'package:club_deportivo_comala_app/Register_Screen.dart';
-import 'package:club_deportivo_comala_app/mainMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:club_deportivo_comala_app/models/Login_model.dart';
+import 'package:club_deportivo_comala_app/pages/MainMenuPage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -76,18 +74,13 @@ class _State extends State<LoginPage> {
                     if (_boton != 'Continuar') {
                       Navigator.of(context).pop();
                     } else {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => MainMenu(),
-                          ),
-                          (route) => false);
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (BuildContext context) => MainMenu(),
-                      //   ),
-                      // );
+                      Navigator.pushNamed(context, 'mainMenu');
+                      // Navigator.pushAndRemoveUntil(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (BuildContext context) => MainMenu(),
+                      //     ),
+                      //     (route) => false);
                     }
                   },
                   child: Text(_boton))
@@ -150,10 +143,7 @@ class _State extends State<LoginPage> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ForgotScreen()),
-                    );
+                    Navigator.pushNamed(context, 'forget');
                   },
                   child: Text('Olvidé Contraseña'),
                 ),
@@ -177,12 +167,7 @@ class _State extends State<LoginPage> {
                         style: TextStyle(fontSize: 20),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RegisterPage(),
-                          ),
-                        );
+                        Navigator.pushNamed(context, 'register');
                       },
                     )
                   ],

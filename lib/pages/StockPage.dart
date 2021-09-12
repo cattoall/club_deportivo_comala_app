@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'StockResponse.dart';
+import '../models/Stock_model.dart';
 
 class StockPage extends StatefulWidget {
   StockPage({Key? key}) : super(key: key);

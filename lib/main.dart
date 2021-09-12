@@ -1,4 +1,5 @@
-import 'package:club_deportivo_comala_app/mainMenu.dart';
+import 'package:club_deportivo_comala_app/pages/LoginPage.dart';
+import 'package:club_deportivo_comala_app/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,10 +11,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Equilibrium POS',
+      initialRoute: '/',
+      routes: getApplicationRoutes(),
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute(builder: (context) => LoginPage());
+      },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainMenu(),
     );
   }
 }
