@@ -1,11 +1,10 @@
-import 'package:club_deportivo_comala_app/models/Forgot_model.dart';
+import 'package:flutter/material.dart';
+
 import 'package:club_deportivo_comala_app/pages/ForgotPage.dart';
 import 'package:club_deportivo_comala_app/pages/InventoryPage.dart';
-import 'package:club_deportivo_comala_app/pages/LoginPage.dart';
 import 'package:club_deportivo_comala_app/pages/MainMenuPage.dart';
 import 'package:club_deportivo_comala_app/pages/RegisterPage.dart';
 import 'package:club_deportivo_comala_app/pages/StockPage.dart';
-import 'package:flutter/material.dart';
 
 Map<String, WidgetBuilder> getApplicationRoutes() {
   return <String, WidgetBuilder>{
