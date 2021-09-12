@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:club_deportivo_comala_app/models/Login_model.dart';
-import 'package:club_deportivo_comala_app/pages/MainMenuPage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
