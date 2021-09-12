@@ -112,6 +112,33 @@ class _State extends State<InventoryPage> {
         });
   }
 
+  Future<String> createAlertInv(
+      BuildContext context, String sProductCode, String sProductName) async {
+    TextEditingController txtText = TextEditingController();
+
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Existencias...'),
+            content: Column(
+              children: [
+                Text('$sProductCode - $sProductName'),
+              ],
+            ),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.of(context).pop(txtText.text.toString());
+                },
+                elevation: 5.0,
+                child: Text('Buscar...'),
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
